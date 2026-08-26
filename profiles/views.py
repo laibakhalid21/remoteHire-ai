@@ -2,14 +2,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from .models import ProfessionalProfile, WorkExperience, Education, CandidateSkill, Project, Certification,ProfileLink
-from .serializers import ProfessionalProfileSerializer, WorkExperienceSerializer, EducationSerializer, CandidateSkillSerializer, ProjectSerializer, CertificationSerializer, ProfileLinkSerializer
+from .models import ProfessionalProfile, WorkExperience, Education, CandidateSkill, Project, Certification,ProfileLink, Skill
+from .serializers import ProfessionalProfileSerializer, WorkExperienceSerializer, EducationSerializer, CandidateSkillSerializer, ProjectSerializer, CertificationSerializer, ProfileLinkSerializer, SkillSerializer
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from accounts.models import CustomUser
 from django.shortcuts import get_object_or_404
-from rest_framework.generics import RetrieveUpdateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.generics import RetrieveUpdateAPIView,ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.parsers import MultiPartParser,  JSONParser
 
 @receiver(post_save, sender=CustomUser)
 def create_professional_profile(sender, instance, created, **kwargs):
@@ -71,18 +71,18 @@ class ProfessionalProfileView(RetrieveUpdateAPIView):
     permission_classes=[IsAuthenticated]
     parser_classes=[
         MultiPartParser,
-        FormParser
+        JSONParser,
     ]
 
 #Authorization protects writeablefields
 #readable already protected frontend cant chnage ownership 
     #url api/profile/me demand id be default
-    # def get_object(self):
-    #     return self.request.user.professional_profile
+    def get_object(self):
+        return self.request.user.professional_profile
 
     #url api/profile/8 safe
-    def get_queryset(self):
-        return ProfessionalProfile.objects.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     return ProfessionalProfile.objects.filter(user=self.request.user)
 
 
     #url api/profile/8
@@ -252,6 +252,12 @@ class EducationDetailView(RetrieveUpdateDestroyAPIView):
 #**********************************SKILLS***********************************
 #Manual apiview same as workexpeirnece
 
+# class SkillListView(ListAPIView):
+#     queryset = Skill.objects.all()
+#     serializer_class = SkillSerializer
+#     permission_classes = [IsAuthenticated]
+
+
 
 class CandidateSkillListCreateView(ListCreateAPIView):
 
@@ -289,7 +295,7 @@ class ProjectListCreateView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     parser_classes=[
         MultiPartParser,
-        FormParser
+        JSONParser
     ]
 
 
@@ -310,7 +316,7 @@ class ProjectDetailView(RetrieveUpdateDestroyAPIView):
     http_method_names = ['get', 'patch', 'delete']
     parser_classes=[
         MultiPartParser,
-        FormParser
+        JSONParser
     ]
 
     def get_queryset(self):
@@ -327,7 +333,7 @@ class CertificationListCreateView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     parser_classes=[
         MultiPartParser,
-        FormParser
+        JSONParser
     ]
 
     def get_queryset(self):
@@ -353,7 +359,7 @@ class CertificationDetailView(RetrieveUpdateDestroyAPIView):
     ]
     parser_classes=[
         MultiPartParser,
-        FormParser
+        JSONParser
     ]
 
 

@@ -11,6 +11,8 @@ urlpatterns=[
 #Education
     path( 'profile/educations/', EducationListCreateView.as_view(), name='education-list-create' ), 
     path( 'profile/educations/<int:pk>/', EducationDetailView.as_view(), name='education-detail' ),
+#SKILLS
+    # path('skills/', SkillListView.as_view(), name='skill-list'),
 #CandidateSKILL
     path( 'profile/skills/', CandidateSkillListCreateView.as_view(), name='candidate-skill-list-create' ), 
     path( 'profile/skills/<int:pk>/', CandidateSkillDetailView.as_view(), name='candidate-skill-detail' ),

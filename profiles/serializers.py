@@ -173,7 +173,10 @@ class SkillSerializer(serializers.ModelSerializer):
 
 
 class CandidateSkillSerializer(serializers.ModelSerializer):
-
+    skill_name=serializers.CharField(
+        source='skill.name',
+        read_only=True
+    )
     class Meta:
         model = CandidateSkill
 
@@ -181,12 +184,14 @@ class CandidateSkillSerializer(serializers.ModelSerializer):
             'id',
             'profile',
             'skill',
+            'skill_name',
             'created_at',
         ]
 
         read_only_fields = [
             'id',
             'profile',
+            'skill_name',
             'created_at',
         ]
 
