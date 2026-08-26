@@ -3,7 +3,8 @@ from .models import CustomUser
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
-
+from django.db import transaction
+from profiles.models import ProfessionalProfile
 
 
 # Reusable password validation for registration and password reset
@@ -68,12 +69,24 @@ class RegisterSerializer(serializers.ModelSerializer):
         user=CustomUser(email=email)
         validate_password_rules(password,user=user)
         return attrs
+
     
     
     # Create the actual user after all validation passes
+
     def create(self, validated_data):
         validated_data.pop('password2')
         return CustomUser.objects.create_user(**validated_data)
+       
+    
+    # @transaction.atomic
+    # def create(self, validated_data):
+    #     validated_data.pop('password2')
+    #     user=CustomUser.objects.create_user(**validated_data)
+    #     if user.role=='professional':
+    #         ProfessionalProfile.objects.create(user=user)
+
+    #     return user
 
 
 
