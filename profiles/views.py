@@ -10,6 +10,7 @@ from accounts.models import CustomUser
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import RetrieveUpdateAPIView,ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.parsers import MultiPartParser,  JSONParser
+from accounts.permissions import IsProfessional
 
 @receiver(post_save, sender=CustomUser)
 def create_professional_profile(sender, instance, created, **kwargs):
@@ -20,7 +21,7 @@ def create_professional_profile(sender, instance, created, **kwargs):
 
 #APIVIEW manual list
 # class ProfessionalProfileView(APIView):
-#     permission_classes=[IsAuthenticated]
+#     permission_classes=[IsProfessional]
 #     parser_classes=[
 #         MultiPartParser,
 #         FormParser
@@ -68,7 +69,7 @@ def create_professional_profile(sender, instance, created, **kwargs):
 #GET?PATCH
 class ProfessionalProfileView(RetrieveUpdateAPIView):
     serializer_class=ProfessionalProfileSerializer
-    permission_classes=[IsAuthenticated]
+    permission_classes=[IsProfessional]
     parser_classes=[
         MultiPartParser,
         JSONParser,
@@ -98,7 +99,7 @@ class ProfessionalProfileView(RetrieveUpdateAPIView):
 
 #APIVIEW Detail
 # class WorkExperienceDetailView(APIView):
-#     permission_classes=[IsAuthenticated]
+#     permission_classes=[IsProfessional]
 
 # #2nd way of filteration from id 
 #     def get_queryset(self):
@@ -146,7 +147,7 @@ class ProfessionalProfileView(RetrieveUpdateAPIView):
 
 #listcreate apiview
 # class WorkExperienceListCreateView(APIView):
-#     permission_classes=[IsAuthenticated]
+#     permission_classes=[IsProfessional]
 
 #     def get_queryset(self):
 #         return WorkExperience.objects.filter(profile__user=self.request.user)
@@ -181,7 +182,7 @@ class ProfessionalProfileView(RetrieveUpdateAPIView):
 class WorkExperienceListCreateView(ListCreateAPIView):
 
     serializer_class = WorkExperienceSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
 
     # bcz this return multiple objects of logged in user
     def get_queryset(self):
@@ -200,7 +201,7 @@ class WorkExperienceListCreateView(ListCreateAPIView):
 
 class WorkExperienceDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = WorkExperienceSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
 
 #with url id  safe
     def get_queryset(self):
@@ -222,7 +223,7 @@ class WorkExperienceDetailView(RetrieveUpdateDestroyAPIView):
 class EducationListCreateView(ListCreateAPIView):
 
     serializer_class = EducationSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
 
     def get_queryset(self):
         return Education.objects.filter(
@@ -238,7 +239,7 @@ class EducationListCreateView(ListCreateAPIView):
 
 class EducationDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = EducationSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
 
 #with url id  safe
     def get_queryset(self):
@@ -255,14 +256,14 @@ class EducationDetailView(RetrieveUpdateDestroyAPIView):
 # class SkillListView(ListAPIView):
 #     queryset = Skill.objects.all()
 #     serializer_class = SkillSerializer
-#     permission_classes = [IsAuthenticated]
+#     permission_classes = [IsProfessional]
 
 
 
 class CandidateSkillListCreateView(ListCreateAPIView):
 
     serializer_class = CandidateSkillSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
 
     def get_queryset(self):
         return CandidateSkill.objects.filter(
@@ -277,7 +278,7 @@ class CandidateSkillListCreateView(ListCreateAPIView):
 class CandidateSkillDetailView(RetrieveUpdateDestroyAPIView):
 
     serializer_class = CandidateSkillSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
 
     def get_queryset(self):
         return CandidateSkill.objects.filter(
@@ -292,7 +293,7 @@ class CandidateSkillDetailView(RetrieveUpdateDestroyAPIView):
 class ProjectListCreateView(ListCreateAPIView):
 
     serializer_class = ProjectSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
     parser_classes=[
         MultiPartParser,
         JSONParser
@@ -312,7 +313,7 @@ class ProjectListCreateView(ListCreateAPIView):
 class ProjectDetailView(RetrieveUpdateDestroyAPIView):
 
     serializer_class = ProjectSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
     http_method_names = ['get', 'patch', 'delete']
     parser_classes=[
         MultiPartParser,
@@ -330,7 +331,7 @@ class ProjectDetailView(RetrieveUpdateDestroyAPIView):
 class CertificationListCreateView(ListCreateAPIView):
 
     serializer_class = CertificationSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
     parser_classes=[
         MultiPartParser,
         JSONParser
@@ -350,7 +351,7 @@ class CertificationListCreateView(ListCreateAPIView):
 class CertificationDetailView(RetrieveUpdateDestroyAPIView):
 
     serializer_class = CertificationSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
     #default it handles get put patch delete and here we restrict
     http_method_names = [
         'get',
@@ -373,7 +374,7 @@ class CertificationDetailView(RetrieveUpdateDestroyAPIView):
 class ProfileLinkListCreateView(ListCreateAPIView):
 
     serializer_class = ProfileLinkSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
 
     def get_queryset(self):
         return ProfileLink.objects.filter(
@@ -388,7 +389,7 @@ class ProfileLinkListCreateView(ListCreateAPIView):
 class ProfileLinkDetailView(RetrieveUpdateDestroyAPIView):
 
     serializer_class = ProfileLinkSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsProfessional]
 
     http_method_names = [
         'get',
