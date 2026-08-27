@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'profiles',
+    'professionalprofile',
     'jobs',
     'rest_framework',
     'rest_framework.authtoken',

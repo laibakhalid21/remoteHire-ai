@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db import transaction
-from profiles.models import ProfessionalProfile
+from professionalprofile.models import ProfessionalProfile
 
 
 # Reusable password validation for registration and password reset

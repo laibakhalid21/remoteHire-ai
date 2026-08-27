@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('jobs', '0001_initial'),
-        ('profiles', '0001_initial'),
+        ('professionalprofile', '0001_initial'),
     ]
 
     operations = [
@@ -115,7 +115,7 @@ class Migration(migrations.Migration):
                 ('credential_url', models.URLField(blank=True)),
                 ('certificate_file', models.FileField(blank=True, null=True, upload_to='certificates/')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='certifications', to='profiles.professionalprofile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='certifications', to='professionalprofile.professionalprofile')),
             ],
             options={
                 'ordering': ['-issue_date', '-created_at'],
@@ -134,7 +134,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='educations', to='profiles.professionalprofile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='educations', to='professionalprofile.professionalprofile')),
             ],
             options={
                 'ordering': ['-end_date', '-start_date'],
@@ -148,7 +148,7 @@ class Migration(migrations.Migration):
                 ('url', models.URLField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='profile_links', to='profiles.professionalprofile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='profile_links', to='professionalprofile.professionalprofile')),
             ],
         ),
         migrations.CreateModel(
@@ -160,7 +160,7 @@ class Migration(migrations.Migration):
                 ('project_url', models.URLField(blank=True)),
                 ('image', models.ImageField(blank=True, null=True, upload_to='projects/')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='projects', to='profiles.professionalprofile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='projects', to='professionalprofile.professionalprofile')),
             ],
             options={
                 'ordering': ['-created_at'],
@@ -174,7 +174,7 @@ class Migration(migrations.Migration):
                 ('analysis_result', models.JSONField(blank=True, default=dict)),
                 ('analyzed_at', models.DateTimeField(auto_now_add=True)),
                 ('job', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='resume_analyses', to='jobs.job')),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='resume_analyses', to='profiles.professionalprofile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='resume_analyses', to='professionalprofile.professionalprofile')),
             ],
             options={
                 'ordering': ['-analyzed_at'],
@@ -185,8 +185,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='candidate_skills', to='profiles.professionalprofile')),
-                ('skill', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='candidate_profiles', to='profiles.skill')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='candidate_skills', to='professionalprofile.professionalprofile')),
+                ('skill', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='candidate_profiles', to='professionalprofile.skill')),
             ],
             options={
                 'constraints': [models.UniqueConstraint(fields=('profile', 'skill'), name='unique_profile_skill')],
@@ -204,7 +204,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='work_experiences', to='profiles.professionalprofile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='work_experiences', to='professionalprofile.professionalprofile')),
             ],
             options={
                 'ordering': ['-start_date'],
